@@ -1,0 +1,131 @@
+
+---
+title: "ERGM"
+author: "2016122002 Jiwoo Kim"
+date: '200822'
+output:
+  word_document: default
+  pdf_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# 4.1) Bernoulli and Erd}os-Renyi models
+
+```{r }
+library("ergm")
+data("sampson")
+samplike
+```
+
+```{r}
+model1 <- ergm(samplike ~ edges)
+model1$coef
+```
+
+# 2) The p1 model
+```{r}
+model2 <- ergm(samplike ~ edges + sender + receiver + mutual, seed=2345,
+               verbose=TRUE)
+summary(model2)
+```
+
+# 3) Exogenous covariates and dyadic independence
+
+```{r}
+data("faux.mesa.high")
+model3 <- ergm(faux.mesa.high ~ edges + nodematch("Grade", diff = TRUE) +
+  nodefactor("Sex"))
+summary(model3)
+```
+# 4) Curved exponential-family models
+```{r}
+model4 <- ergm(faux.mesa.high ~ edges + nodematch("Grade") +
+  gwesp(0.5, fixed=TRUE), verbose=TRUE, seed = 789)
+summary(model4)
+```
+
+```{r}
+model4a <- ergm(faux.mesa.high ~ edges + nodematch("Grade") +
+  gwesp(0.5, fixed=FALSE), verbose=FALSE, seed=789)
+summary(model4a)
+```
+# 5.2) Pseudolikelihood
+```{r}
+model3a <- ergm(faux.mesa.high ~ edges + nodematch("Grade", diff=TRUE) +
+  nodefactor("Sex"), MPLEonly=TRUE)
+model3$coef - model3a$coef
+```
+
+# 5.3) Profile likelihood computations
+```{r}
+theta0 <- model3$coef
+theta0[1] <- -6.0
+model3b <- ergm(faux.mesa.high ~ offset(edges) +
+  nodematch("Grade", diff=TRUE) + nodefactor("Sex"),
+  theta0 = theta0, control=control.ergm(force.mcmc=TRUE),
+  seed=456, verbose=TRUE)
+model3b$coef
+```
+
+# 6.3) Example: Simulating a network using MCMC
+
+```{r}
+net1 <- simulate(model2, verbose=TRUE, seed=678)
+net1 <- simulate(samplike ~ edges + sender + receiver + mutual, 
+  theta0=model2$coef, verbose=TRUE, seed=678)
+```
+
+```{r}
+rbind(summary(samplike ~ edges + mutual + idegree(0:3) + triangle), 
+  summary(net1 ~ edges + mutual + idegree(0:3) + triangle))
+```
+
+# 7) Goodness of fit
+
+```{r}
+m3gof <- gof(model3, GOF = ~distance + espartners + degree + triadcensus,
+  verbose = TRUE, interval = 5e+4, seed=111)
+```
+
+```{r}
+par(mfrow = c(2,2))
+plot(m3gof, cex.lab=1.6, cex.axis=1.6, plotlogodds = TRUE)
+```
+
+
+# A. R code for network plots
+
+```{r}
+data(sampson) 
+gp <- samplike %v% "group" 
+gp <- match(gp, unique(gp)) 
+set.seed(321)
+plot(samplike, 
+     vertex.cex=4, vertex.col=gp+1, 
+     vertex.sides=c(3,4,8)[gp], 
+     main="(a)", cex.main=3) 
+
+```
+
+
+```{r}
+data(faux.mesa.high) 
+grd <- faux.mesa.high %v% "Grade" 
+sx <- faux.mesa.high %v% "Sex" 
+vs <- c(4, 12)[match(sx, c("M", "F"))] 
+col <- c(6, 5, 3, 7, 4, 2) 
+set.seed(654)
+plot(faux.mesa.high, 
+     vertex.sides = vs, 
+     vertex.rot = 45, 
+     vertex.cex=2.5, 
+     vertex.col=col[grd-6], 
+     edge.lwd = 2, 
+     main="(b)", 
+     cex.main=3, 
+     displayisolates=FALSE) 
+legend("topright", legend=7:12, fill=col, cex=2.2) 
+```

@@ -1,0 +1,143 @@
+---
+title: "LSM"
+author: "Jiwoo Kim"
+output:
+  html_document: default
+  pdf_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# 2. Model specification and fitting
+
+## A simple motivating example
+
+```{r}
+library("latentnet")
+
+data("sampson")
+network.vertex.names(samplike)
+
+samplike %v% "group"
+
+# d : Dimensionality of the latent space d.
+samplike.fit<-ergmm(samplike~euclidean(d=2),tofit=c("mle"))
+
+#maximum likelihood positions
+samplike.fit$mle$Z
+
+oneL <- samplike %v% "group"
+oneL[oneL == "Turks"] <- "T"
+oneL[oneL == "Outcasts"] <- "O"
+oneL[oneL == "Loyal"] <- "L"
+oneL[c(1, 7, 15)] <- "W"
+oneL
+
+oneLcolors <- c("red", "blue", "black", "green")[match(oneL,c("T", "O", "L", "W"))]
+
+plot(samplike.fit, label = oneL, vertex.col = oneLcolors, what="mle", main = "MLE positions",
+print.formula=FALSE,labels=TRUE)
+title(sub = "Color represents the estimated groups; Labels the Sampson's groups")
+```
+
+## An example of a latent position fit with clustering
+
+```{r}
+set.seed(3141)
+
+# G :Number of spherical Gaussian clusters into which the latent space positions are grouped G.
+samplike.fit <- ergmm(samplike ~ euclidean(d = 2, G = 3), verbose = TRUE)
+
+summary(samplike.fit)
+```
+
+## Nonbinary edge weights
+
+```{r}
+data("tribes")
+tribes.fit<-ergmm(tribes~euclidean(d=2,G=3),
+                family="binomial",fam.par=list(trials=2),response="sign.012", verbose=1)
+summary(tribes.fit)
+```
+
+# 3. Output format and visualization
+
+## Summarizing model fits
+```{r}
+attr(samplike.fit$sample,"Q")
+```
+
+
+## Plotting model fits
+```{r Plotting, warning=FALSE}
+plot(samplike.fit)
+
+plot(samplike.fit,pie=TRUE,vertex.cex=2.5)
+
+plot(samplike.fit,what="pmean")
+
+#plot(samplike.fit,what="pmode")
+
+plot(samplike.fit,what=4)
+
+#for(i in 1:samplike.fit$control$sample.size){
+#  plot(samplike.fit,what=i)
+#  Sys.sleep(0.1)
+#}
+
+plot(tribes.fit,
+     edge.col=as.matrix(tribes,"gama",m="a")*3+as.matrix(tribes,"rova",m="a")*2,pie=TRUE)
+```
+
+# 4. Diagnostics and algorithm tuning
+
+```{r Diagnostics, warning=FALSE}
+par(mar=c(1,1,1,1))
+mcmc.diagnostics(samplike.fit)
+
+mcmc.diagnostics(tribes.fit)
+```
+
+# 5. Simulation of latent position and latent cluster networks
+
+```{r}
+likemonks<-simulate(samplike.fit)
+likemonks.par<-attr(likemonks,"ergmm.par")
+plot(likemonks,coord=likemonks.par$Z,edge.col=8,
+     vertex.col=c("red","green","blue")[likemonks.par$Z.K])
+
+likemonks1<-with(samplike.fit,simulate(model,par=sample[[1]],prior=prior))
+plot(likemonks1)
+
+samplike.fit$mkl$Z.K
+
+samplike.fit$mkl$Z
+
+plot(samplike.fit,what="density")
+
+number.to.plot <- 24
+interval.to.plot <- round(dim(samplike.fit$sample$Z)[1]/number.to.plot)
+for (i in 1:number.to.plot) {
+  isamp <- 1 + (i - 1) * interval.to.plot
+  isamp.plot <- plot(samplike, label = "",
+                     vertex.col = samplike.fit$sample$Z.K[isamp, ],
+                     arrowhead.cex = 0.3, vertex.cex = 2, 
+                     coord = samplike.fit$sample$Z[isamp, , ],
+                     main = paste("Draw number", isamp))
+}
+```
+
+# 6. Assessment of model fit via posterior predictive checks
+
+```{r}
+
+samplike.fit.gof <- gof(samplike.fit)
+
+summary(samplike.fit.gof)
+
+plot(samplike.fit.gof)
+
+```
+
