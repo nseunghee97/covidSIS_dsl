@@ -1,6 +1,6 @@
-# coronaSIS
+# covidSIS
 
-**Network Modeling on Corona**
+**Network Modeling on Covid-19**
 
 ---
 
@@ -28,7 +28,7 @@
     - SIS
     - SIR
     
-## Networking Modeling on Corona
+## Networking Modeling on Covid-19
 
 ### Code Detail
 
