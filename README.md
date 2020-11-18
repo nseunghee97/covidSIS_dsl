@@ -6,7 +6,7 @@
 
 **Data Science Lab**  
 **Network Analysis Study**  
-Jinwoo Lee(이진우), Jiwoo Kim(김지우), Seunghee Nam(남승희)
+[Jinwoo Lee(이진우)](https://github.com/jinwu99), [Jiwoo Kim(김지우)](https://github.com/zioo1004), [Seunghee Nam(남승희)](https://github.com/shd04121)
 
 ---
 
