@@ -2,8 +2,8 @@
 
 ---
 
-Data Science Lab
-Network Analysis Study
+Data Science Lab  
+Network Analysis Study  
 이진우, 김지우, 남승희
 
 ---
