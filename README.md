@@ -48,7 +48,7 @@
   - **subway**
   - **publicBike**
     - **data**
-      - `public_bike_rental_log.csv` : Rental log of Seoul public bike.
+      - `public_bike_rental_log.csv` : Rental log of Seoul public bike. *★ Large File. Should be unzipped.*
       - `public_bike_rental_point.csv` : Rental point of Seoul public bike.
     - `public_bike_network_EDA.ipynb`
       - Preprocess on public bike dataset. Create graph instance using node and edge file.
