@@ -1,9 +1,11 @@
 # coronaSIS
 
 ---
+
 Data Science Lab
 Network Analysis Study
 이진우, 김지우, 남승희
+
 ---
 
 **Network Modeling on Corona**
