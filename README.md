@@ -28,7 +28,9 @@ Jinwoo Lee(이진우), Jiwoo Kim(김지우), Seunghee Nam(남승희)
     - SIS
     - SIR
     
-## Code Detail
+## Networking Modeling on Corona
+
+### Code Detail
 
 - **model** : R markdown files regarding each network models
   - `ERGM.Rmd`
