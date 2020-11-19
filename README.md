@@ -19,15 +19,18 @@
 - Network Modeling
   - [ERGM(Exponential Random Graph Model)](https://www.notion.so/ERGM-Exponential-Random-Graph-Model-d5bdb371c7fa47e9838bcf646a2b2a93)
     - [Hierarchical ERGM](https://docs.google.com/presentation/d/1nJbM5os3KeD4proiX-znSSRXwCY6jqvdsQqvSDmzU48/edit?usp=sharing)
-    - MultiLayer ERGM
-    - Temporal ERGM
+    - [MultiLayer ERGM](https://docs.google.com/presentation/d/1nJbM5os3KeD4proiX-znSSRXwCY6jqvdsQqvSDmzU48/edit#slide=id.g900191b934_0_941)
+    - [Temporal ERGM](https://docs.google.com/presentation/d/1nJbM5os3KeD4proiX-znSSRXwCY6jqvdsQqvSDmzU48/edit#slide=id.g90169bb7d6_0_71)
   - [SBM(Stochastic Block Model)](https://www.notion.so/SBM-Stochastic-Block-Model-52cc1201be204a1caa4c6991ce934761)
   - [LSM(Latent Space Model)](https://www.notion.so/LSM-Latent-Space-Model-70f876fdf70546299b7bf1dcd158a760)
+    - [Additive and multiplicative effects network models](https://docs.google.com/presentation/d/17YYz-vCWXw8okpRxTPERMp1wkCTRofJ7T2XGugvOTSc/edit?usp=sharing)
   - Multiplex Network
+    - [reference](https://lipn.univ-paris13.fr/~kanawati/mnm-wi2015.pdf)
   - [Dynamic Networks](https://www.notion.so/Dynamic-Networks-fdc592a56e1a42fe835611b6b5d351cb)
     - SIS
     - SIR
-    
+    - [reference](http://www.leonidzhukov.net/hse/2020/networks/lectures/lecture10.pdf)
+
 ## Networking Modeling on Covid-19
 
 ### Code Detail
