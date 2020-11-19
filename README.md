@@ -18,7 +18,7 @@
 - [Network Visualization using Gephi](https://www.notion.so/Gephi-cd69959603f9477881a0e68bada90daf)
 - Network Modeling
   - [ERGM(Exponential Random Graph Model)](https://www.notion.so/ERGM-Exponential-Random-Graph-Model-d5bdb371c7fa47e9838bcf646a2b2a93)
-    - Hierarchical ERGM
+    - [Hierarchical ERGM](https://docs.google.com/presentation/d/1nJbM5os3KeD4proiX-znSSRXwCY6jqvdsQqvSDmzU48/edit?usp=sharing)
     - MultiLayer ERGM
     - Temporal ERGM
   - [SBM(Stochastic Block Model)](https://www.notion.so/SBM-Stochastic-Block-Model-52cc1201be204a1caa4c6991ce934761)
